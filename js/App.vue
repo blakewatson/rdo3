@@ -4,11 +4,13 @@
             Restart Game
         </button>
         <DiceRoller :rolls="rolls" @roll="rolls--" />
+        <Scorecard :rolls="rolls" @scored="scored" @end="endGame" />
     </div>
 </template>
 
 <script>
 import DiceRoller from './components/DiceRoller';
+import Scorecard from './components/Scorecard';
 
 export default {
     name: 'App',
@@ -20,6 +22,10 @@ export default {
     },
 
     methods: {
+        endGame() {},
+
+        scored() {},
+
         start() {
             this.rolls = 3;
         }
@@ -30,7 +36,8 @@ export default {
     },
 
     components: {
-        DiceRoller
+        DiceRoller,
+        Scorecard
     }
 };
 </script>

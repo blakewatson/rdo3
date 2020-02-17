@@ -1,11 +1,17 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+<template>
+    <div class="scorecard">
+        Scorecard
+    </div>
+</template>
 
-Vue.use(Vuex);
+<script>
+export default {
+    name: 'Scorecard',
 
-export default new Vuex.Store({
-    state: {
-        scorecard: {
+    props: ['rolls'],
+
+    data() {
+        return {
             ones: null,
             twos: null,
             threes: null,
@@ -19,6 +25,11 @@ export default new Vuex.Store({
             smallStraight: null,
             largeStraight: null,
             royalRoll: null,
-        }
-    }
-});
+        };
+    },
+
+    methods: {
+
+    },
+}
+</script>

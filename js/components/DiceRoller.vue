@@ -33,7 +33,6 @@ export default {
 
     watch: {
         rolls(newVal, oldVal) {
-            console.log(newVal, oldVal)
             if (oldVal === null && newVal !== null) {
                 this.rollAll();
             }
@@ -43,6 +42,10 @@ export default {
     methods: {
         deselectAll() {
             this.reroll = this.reroll.map(() => false);
+        },
+
+        emitRoll() {
+            this.$emit('rolled', this.dice);
         },
 
         roll() {
@@ -55,7 +58,7 @@ export default {
             
             this.deselectAll();
 
-            this.$emit('roll');
+            this.emitRoll();
         },
 
         rollAll() {
@@ -63,7 +66,7 @@ export default {
                 return Math.floor(Math.random() * 6) + 1;
             });
 
-            this.$emit('roll');
+            this.emitRoll();
         },
 
         toggleReroll(index) {

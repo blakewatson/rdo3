@@ -68,6 +68,7 @@ html {
 .wrapper {
   margin: 0 auto;
   margin-top: 50px;
+  margin-bottom: 50px;
   max-width: 600px;
 }
 
@@ -85,10 +86,14 @@ html {
 button, .button {
   all: unset;
   padding: 0.5em 1em;
+  border: 1px solid transparent;
   cursor: pointer;
   text-align: center;
   background-color: #ebedf0;
   color: #19191b;
+}
+button:hover, button:focus, .button:hover, .button:focus {
+  border-color: #bfc2c7;
 }
 button:disabled, .button:disabled {
   opacity: 0.5;
@@ -144,6 +149,47 @@ button:disabled, .button:disabled {
 
 .roll-button {
   min-width: 120px;
-  background-color: #1032a0;
+  border-color: transparent;
+  background-color: #1e4eee;
   color: rgba(255, 255, 255, 0.85);
+}
+.roll-button:hover, .roll-button:focus {
+  border-color: transparent;
+  background-color: #3967ff;
+}
+
+/* -- Scorecard -- */
+.scorecard {
+  font-size: 16px;
+  line-height: 1.45em;
+}
+
+.scorecard-tables {
+  display: flex;
+  justify-content: space-between;
+}
+.scorecard-tables table {
+  width: calc(50% - 15px);
+}
+.scorecard-tables tr {
+  border-bottom: 1px solid #eee;
+}
+.scorecard-tables td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.score-name-cell {
+  vertical-align: middle;
+}
+
+.score-cell {
+  width: 80px;
+}
+
+.score-button {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: right;
 }

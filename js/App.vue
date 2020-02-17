@@ -3,8 +3,8 @@
         <button class="restart" @click="start()">
             Restart Game
         </button>
-        <DiceRoller :rolls="rolls" @roll="rolls--" />
-        <Scorecard :rolls="rolls" @scored="scored" @end="endGame" />
+        <DiceRoller :rolls="rolls" @rolled="rolled" />
+        <Scorecard :dice="dice" :rolls="rolls" @scored="scored" @end="endGame" />
     </div>
 </template>
 
@@ -17,12 +17,18 @@ export default {
 
     data() {
         return {
+            dice: [],
             rolls: null
         }
     },
 
     methods: {
         endGame() {},
+
+        rolled(dice) {
+            this.dice = dice;
+            this.rolls--;
+        },
 
         scored() {},
 

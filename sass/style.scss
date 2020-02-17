@@ -5,6 +5,7 @@
 .wrapper {
     margin: 0 auto;
     margin-top: 50px;
+    margin-bottom: 50px;
     max-width: 600px;
 }
 
@@ -24,10 +25,15 @@
 button, .button {
     all: unset;
     padding: 0.5em 1em;
+    border: 1px solid transparent;
     cursor: pointer;
     text-align: center;
     background-color: rgb(235, 237, 240);
     color: rgb(25, 25, 27);
+
+    &:hover, &:focus {
+        border-color: rgb(191, 194, 199);
+    }
 
     &:disabled {
         opacity: 0.5;
@@ -86,6 +92,53 @@ button, .button {
 
 .roll-button {
     min-width: 120px;
-    background-color: rgb(16, 50, 160);
+    border-color: transparent;
+    background-color: rgb(30, 78, 238);
     color: rgba(#fff, 0.85);
+
+    &:hover, &:focus {
+        border-color: transparent;
+        background-color: rgb(57, 103, 255);
+    }
+}
+
+
+/* -- Scorecard -- */
+
+.scorecard {
+    font-size: 16px;
+    line-height: 1.45em;
+}
+
+.scorecard-tables {
+    display: flex;
+    justify-content: space-between;
+
+    table {
+        width: calc(50% - 15px);
+    }
+
+    tr {
+        border-bottom: 1px solid #eee;
+    }
+
+    td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+.score-name-cell {
+    vertical-align: middle;
+}
+
+.score-cell {
+    width: 80px;
+}
+
+.score-button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
 }

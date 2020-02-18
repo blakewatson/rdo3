@@ -1,12 +1,44 @@
+/* -- Helper functions -- */
+
+// Sums the entire hand
 function sumAll(dice) {
     return dice.reduce((total, val) => total + val, 0);
 }
 
+// Sums all the occurrences of number, `num`.
 function sumAllOfGivenNumber(dice, num) {
     return dice.reduce((acc, val) => {
         return val === num ? acc + val : acc;
     }, 0);
 }
+
+// Returns true if any number is found n number of times. Otherwise false.
+function nOfAKind(dice, n) {
+    return dice.some(die => {
+        return n <= dice.reduce((acc, val) => val === die ? acc + 1 : acc, 0);
+    });
+}
+
+// Returns an object with the keys 1-6, the value of each being the number of times
+// that number occurred in the hand.
+function getOccurrences(dice) {
+    const map = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0
+    };
+
+    return dice.reduce((acc, val) => {
+        acc[val]++;
+        return acc;
+    }, map);
+}
+
+
+/* -- Scoring functions -- */
 
 function ones(dice) {
     return sumAllOfGivenNumber(dice, 1);
@@ -32,12 +64,6 @@ function sixes(dice) {
     return sumAllOfGivenNumber(dice, 6);
 }
 
-function nOfAKind(dice, n) {
-    return dice.some(die => {
-        return n <= dice.reduce((acc, val) => val === die ? acc + 1 : acc, 0);
-    });
-}
-
 function threeOfAKind(dice) {
     if(nOfAKind(dice, 3)) return sumAll(dice);
     return 0;
@@ -50,7 +76,23 @@ function fourOfAKind(dice) {
 
 function fullHouse(dice) {
     if (!nOfAKind(dice, 3)) return 0;
-    
+    const occurrences = getOccurrences(dice);
+    const hasFullHouse = Object.entries(occurrences).some(([key, val]) => val === 2);
+    return hasFullHouse ? 25 : 0;
+}
+
+function smallStraight(dice) {
+    dice.sort();
+    dice = dice.join('');
+    const hasSmallStraight = ['1234', '2345', '3456'].some(combo => dice.includes(combo));
+    return hasSmallStraight ? 30 : 0;
+}
+
+function largeStraight(dice) {
+    dice.sort();
+    dice = dice.join('');
+    const hasLargeStraight = ['12345', '23456'].some(combo => dice.includes(combo));
+    return hasLargeStraight ? 40 : 0;
 }
 
 export default {
@@ -61,5 +103,8 @@ export default {
     fives,
     sixes,
     threeOfAKind,
-    fourOfAKind
+    fourOfAKind,
+    fullHouse,
+    smallStraight,
+    largeStraight
 };

@@ -6,7 +6,14 @@
                     <tr v-for="(val, key) in top" :key="key">
                         <td class="score-name-cell">{{ labels[key] }}</td>
                         <td class="score-cell">
-                            <button class="score-button" v-text="getScoreButtonLabel(key)"></button>
+                            <!-- TODO: special rules for top bonus -->
+                            <button
+                                class="score-button"
+                                v-if="scorecard[key] === null"
+                                v-text="getScoreButtonLabel(key)"
+                                @click="scoreTurn('top', key)"
+                            ></button>
+                            <span class="score-label" v-else>{{ scorecard[key] }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -17,7 +24,13 @@
                     <tr v-for="(val, key) in bottom" :key="key">
                         <td class="score-name-cell">{{ labels[key] }}</td>
                         <td class="score-cell">
-                            <button class="score-button" v-text="getScoreButtonLabel(key)"></button>
+                            <button
+                                class="score-button"
+                                v-if="shouldShowBottomScoreButton(key, val)"
+                                v-text="getScoreButtonLabel(key)"
+                                @click="scoreTurn('bottom', key)"
+                            ></button>
+                            <span class="score-label" v-else>{{ scorecard[key] }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -52,7 +65,8 @@ export default {
                 fullHouse: null,
                 smallStraight: null,
                 largeStraight: null,
-                royalRoll: null
+                royalRoll: null,
+                chance: null
             },
             
             labels: {
@@ -68,7 +82,8 @@ export default {
                 fullHouse: 'Full House',
                 smallStraight: 'Small Straight',
                 largeStraight: 'Large Straight',
-                royalRoll: 'Royal Roll'
+                royalRoll: 'Royal Roll',
+                chance: 'Chance'
             },
 
             scoreOfDice: {}
@@ -76,7 +91,7 @@ export default {
     },
 
     watch: {
-        rolls(val) {
+        dice(val) {
             this.scoreDice();
         }
     },
@@ -113,6 +128,18 @@ export default {
                 scores[key] = score;
                 return scores;
             }, { ...this.scorecard });
+        },
+
+        scoreTurn(section, key) {
+            this[section][key] = this.scoreOfDice[key];
+            this.$emit('scored');
+        },
+
+        shouldShowBottomScoreButton(key, val) {
+            if (key === 'royalRoll' && val !== null && val !== 0) {
+                return this.scoreOfDice[key] > 0;
+            }
+            return val === null;
         }
     },
 }

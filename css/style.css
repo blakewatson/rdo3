@@ -193,3 +193,10 @@ button:disabled, .button:disabled {
   width: 100%;
   text-align: right;
 }
+
+.score-label {
+  display: block;
+  padding: 0.5em 1em;
+  border: 1px solid transparent;
+  text-align: right;
+}

@@ -25,12 +25,20 @@ export default {
     methods: {
         endGame() {},
 
-        rolled(dice) {
+        rolled(dice, devMode = false) {
             this.dice = dice;
+
+            if (devMode) {
+                this.rolls = 0;
+                return;
+            }
+
             this.rolls--;
         },
 
-        scored() {},
+        scored() {
+            this.rolls = 3;
+        },
 
         start() {
             this.rolls = 3;

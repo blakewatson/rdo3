@@ -1,5 +1,7 @@
 <template>
     <div class="dice-roller" v-if="rolls !== null">
+        <input type="text" style="margin-bottom: 1em" v-if="devMode" v-model="devDice">
+
         <ul class="dice-list">
             <li v-for="(d, i) in dice" class="die-item">
                 <label class="die-wrap" :class="{ reroll: reroll[i] }" @mouseup="toggleReroll(i)">
@@ -20,21 +22,31 @@ export default {
 
     data() {
         return {
+            devMode: true,
+            devDice: '',
             dice: [null, null, null, null, null],
             reroll: [false, false, false, false, false]
         };
     },
 
-    filters: {
-        die(val) {
-            return val === null ? '—' : val;
-        }
-    },
-
     watch: {
+        devDice(val) {
+            this.dice = val.split('').map(d => parseInt(d));
+
+            if(this.dice.length === 5) {
+                this.$emit('rolled', this.dice, true);
+            }
+        },
+
         rolls(newVal, oldVal) {
             if (oldVal === null && newVal !== null) {
                 this.rollAll();
+                return;
+            }
+
+            if (newVal === 3) {
+                this.rollAll();
+                return;
             }
         }
     },
@@ -70,7 +82,13 @@ export default {
         },
 
         toggleReroll(index) {
-            this.reroll = this.reroll.map((r, i) => index === i ? !r : r);
+            this.$set(this.reroll, index, !this.reroll[index]);
+        }
+    },
+
+    filters: {
+        die(val) {
+            return val === null ? '—' : val;
         }
     }
 }

@@ -82,6 +82,7 @@ function fullHouse(dice) {
 }
 
 function smallStraight(dice) {
+    dice = [...dice];
     dice.sort();
     // remove duplicates
     dice = dice.reduce((acc, val) => {
@@ -96,6 +97,7 @@ function smallStraight(dice) {
 }
 
 function largeStraight(dice) {
+    dice = [...dice];
     dice.sort();
     dice = dice.join('');
     const hasLargeStraight = ['12345', '23456'].some(combo => dice.includes(combo));

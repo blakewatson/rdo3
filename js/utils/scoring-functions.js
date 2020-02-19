@@ -83,6 +83,13 @@ function fullHouse(dice) {
 
 function smallStraight(dice) {
     dice.sort();
+    // remove duplicates
+    dice = dice.reduce((acc, val) => {
+        if (!acc.includes(val)) {
+            acc.push(val);
+        }
+        return acc;
+    }, []);
     dice = dice.join('');
     const hasSmallStraight = ['1234', '2345', '3456'].some(combo => dice.includes(combo));
     return hasSmallStraight ? 30 : 0;
@@ -93,6 +100,18 @@ function largeStraight(dice) {
     dice = dice.join('');
     const hasLargeStraight = ['12345', '23456'].some(combo => dice.includes(combo));
     return hasLargeStraight ? 40 : 0;
+}
+
+function royalRoll(dice, score) {
+    if (!nOfAKind(dice, 5)) {
+        return 0;
+    }
+
+    return !score ? 50 : score + 100;
+}
+
+function chance(dice) {
+    return sumAll(dice);
 }
 
 export default {
@@ -106,5 +125,7 @@ export default {
     fourOfAKind,
     fullHouse,
     smallStraight,
-    largeStraight
+    largeStraight,
+    royalRoll,
+    chance
 };

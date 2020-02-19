@@ -94,6 +94,9 @@ export default {
     methods: {
         calculateScore(key) {
             if (key in scoringFunctions) {
+                if (key === 'royalRoll') {
+                    return scoringFunctions.royalRoll(this.dice, this.bottom.royalRoll);
+                }
                 return scoringFunctions[key](this.dice);
             }
             return 0;

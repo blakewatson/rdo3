@@ -130,9 +130,37 @@ export default {
             return 0;
         },
 
+        calculateTopBonus() {
+            // if top, check for completion of top and apply bonus if needed
+            const completedTop = Object.values(this.top).every(val => val !== null);
+            const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
+            if (completedTop || topTotal >= 63) {
+                this.topBonus = topTotal >= 63 ? 35 : 0;
+            }
+        },
+
         getScoreButtonLabel(key) {
             if (!key in this.scoreOfDice) return 0;
             return this.scoreOfDice[key];
+        },
+
+        handleRoyalRoll() {
+            if (this.bottom.royalRoll === null) {
+                this.bottom.royalRoll = this.scoreOfDice.royalRoll;
+                this.$emit('scored');
+                return;
+            }
+
+            const keyOfTopNumRolled = Object.keys(this.top)[this.dice[0] - 1];
+
+            if (this.top[keyOfTopNumRolled] === null) {
+                this.bottom.royalRoll = this.scoreOfDice.royalRoll;
+                this.top[keyOfTopNumRolled] = this.scoreOfDice[keyOfTopNumRolled];
+                this.$emit('scored');
+                return;
+            }
+
+            // TODO: bottom half wildcard
         },
 
         scoreDice() {
@@ -144,15 +172,14 @@ export default {
         },
 
         scoreTurn(section, key) {
-            this[section][key] = this.scoreOfDice[key];
-
-            // if top, check for completion of top and apply bonus if needed
-            const completedTop = Object.values(this.top).every(val => val !== null);
-            const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
-            if (completedTop || topTotal >= 63) {
-                this.topBonus = topTotal >= 63 ? 35 : 0;
+            if (key === 'royalRoll') {
+                this.handleRoyalRoll();
+                return;
             }
 
+            this.calculateTopBonus();
+
+            this[section][key] = this.scoreOfDice[key];
             this.$emit('scored');
         },
 

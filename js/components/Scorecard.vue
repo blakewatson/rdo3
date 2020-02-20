@@ -6,7 +6,6 @@
                     <tr v-for="(val, key) in top" :key="key">
                         <td class="score-name-cell">{{ labels[key] }}</td>
                         <td class="score-cell">
-                            <!-- TODO: special rules for top bonus -->
                             <button
                                 class="score-button"
                                 v-if="scorecard[key] === null"
@@ -15,6 +14,10 @@
                             ></button>
                             <span class="score-label" v-else>{{ scorecard[key] }}</span>
                         </td>
+                    </tr>
+                    <tr>
+                        <td class="score-name-cell">Bonus</td>
+                        <td class="score-cell bonus-cell"><span class="score-label">{{ topBonusDisplay }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,8 +58,7 @@ export default {
                 threes: null,
                 fours: null,
                 fives: null,
-                sixes: null,
-                topBonus: null
+                sixes: null
             },
 
             bottom: {
@@ -68,6 +70,8 @@ export default {
                 royalRoll: null,
                 chance: null
             },
+            
+            topBonus: null,
             
             labels: {
                 ones: 'Ones',
@@ -103,6 +107,15 @@ export default {
 
         scorecardKeys() {
             return Object.keys(this.scorecard);
+        },
+
+        topBonusDisplay() {
+            if (this.topBonus !== null) {
+                return this.topBonus;
+            }
+
+            const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
+            return `${63 - topTotal} to go`;
         }
     },
 
@@ -132,6 +145,14 @@ export default {
 
         scoreTurn(section, key) {
             this[section][key] = this.scoreOfDice[key];
+
+            // if top, check for completion of top and apply bonus if needed
+            const completedTop = Object.values(this.top).every(val => val !== null);
+            const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
+            if (completedTop || topTotal >= 63) {
+                this.topBonus = topTotal >= 63 ? 35 : 0;
+            }
+
             this.$emit('scored');
         },
 

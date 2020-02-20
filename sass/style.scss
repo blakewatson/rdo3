@@ -133,13 +133,17 @@ button, .button {
 }
 
 .score-cell {
-    width: 80px;
+    text-align: right;
+}
+
+.bonus-cell {
+    width: 50%;
 }
 
 .score-button {
-    display: block;
+    display: inline-block;
     box-sizing: border-box;
-    width: 100%;
+    width: 80px;
     text-align: right;
 }
 

@@ -4,7 +4,7 @@
             Restart Game
         </button>
         <DiceRoller :rolls="rolls" @rolled="rolled" />
-        <Scorecard :dice="dice" :rolls="rolls" @scored="scored" @end="endGame" />
+        <Scorecard :dice="dice" :rolls="rolls" @scored="scored" @gameover="endGame" />
     </div>
 </template>
 
@@ -23,7 +23,9 @@ export default {
     },
 
     methods: {
-        endGame() {},
+        endGame() {
+            alert(`Game over.`);
+        },
 
         rolled(dice, devMode = false) {
             this.dice = dice;

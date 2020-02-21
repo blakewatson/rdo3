@@ -133,11 +133,29 @@ export default {
         },
 
         calculateTopBonus() {
+            if (this.topBonus !== null) {
+                return;
+            }
+
             // if top, check for completion of top and apply bonus if needed
             const completedTop = Object.values(this.top).every(val => val !== null);
             const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
-            if (completedTop || topTotal >= 63) {
+
+            if (topTotal >= 63) {
+                this.topBonus = 35;
+                return;
+            }
+
+            if (completedTop) {
                 this.topBonus = topTotal >= 63 ? 35 : 0;
+            }
+        },
+
+        checkForGameOver() {
+            const scorecardIncomplete = Object.values(this.scorecard).some(val => val === null);
+
+            if (!scorecardIncomplete) {
+                this.$emit('gameover');
             }
         },
 
@@ -198,15 +216,19 @@ export default {
         scoreTurn(section, key) {
             if (key === 'royalRoll') {
                 this.handleRoyalRoll();
+                this.calculateTopBonus();
+                this.checkForGameOver();
                 return;
             }
 
             this.isSelectingJoker = false;
 
-            this.calculateTopBonus();
-
             this[section][key] = this.scoreOfDice[key];
+
+            this.calculateTopBonus();
+            
             this.$emit('scored');
+            this.checkForGameOver();
         },
 
         shouldShowBottomScoreButton(key, val) {

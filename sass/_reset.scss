@@ -50,6 +50,10 @@ table {
 	border-spacing: 0;
 }
 
+strong {
+	font-weight: bold;
+}
+
 /* apply a natural box layout model to all elements, but allowing components to change */
 html {
 	box-sizing: border-box;

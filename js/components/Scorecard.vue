@@ -16,8 +16,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="score-name-cell">Bonus</td>
+                        <td class="score-name-cell">Bonus (35)</td>
                         <td class="score-cell bonus-cell"><span class="score-label">{{ topBonusDisplay }}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="score-name-cell"><strong>Upper Total</strong></td>
+                        <td class="score-cell"><span class="score-label"><strong>{{ topTotalWithBonus }}</strong></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -35,6 +39,14 @@
                             ></button>
                             <span class="score-label" v-else>{{ scorecard[key] }}</span>
                         </td>
+                    </tr>
+                    <tr>
+                        <td class="score-name-cell"><strong>Lower Total</strong></td>
+                        <td class="score-cell"><span class="score-label"><strong>{{ bottomTotal }}</strong></span></td>
+                    </tr>
+                    <tr>
+                        <td class="score-name-cell"><strong>Grand Total</strong></td>
+                        <td class="score-cell"><span class="score-label"><strong>{{ grandTotal }}</strong></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -103,6 +115,14 @@ export default {
     },
 
     computed: {
+        grandTotal() {
+            return this.topTotalWithBonus + this.bottomTotal;
+        },
+
+        bottomTotal() {
+            return Object.values(this.bottom).reduce((acc, val) => acc + val, 0);
+        },
+
         scorecard() {
             return { ...this.top, ...this.bottom };
         },
@@ -116,8 +136,15 @@ export default {
                 return this.topBonus;
             }
 
-            const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
-            return `${63 - topTotal} to go`;
+            return `${63 - this.topTotal} to go`;
+        },
+
+        topTotal() {
+            return Object.values(this.top).reduce((acc, val) => acc + val, 0);
+        },
+
+        topTotalWithBonus() {
+            return this.topTotal + this.topBonus;
         }
     },
 
@@ -139,15 +166,14 @@ export default {
 
             // if top, check for completion of top and apply bonus if needed
             const completedTop = Object.values(this.top).every(val => val !== null);
-            const topTotal = Object.values(this.top).reduce((acc, val) => acc + val, 0);
 
-            if (topTotal >= 63) {
+            if (this.topTotal >= 63) {
                 this.topBonus = 35;
                 return;
             }
 
             if (completedTop) {
-                this.topBonus = topTotal >= 63 ? 35 : 0;
+                this.topBonus = this.topTotal >= 63 ? 35 : 0;
             }
         },
 
@@ -226,7 +252,7 @@ export default {
             this[section][key] = this.scoreOfDice[key];
 
             this.calculateTopBonus();
-            
+
             this.$emit('scored');
             this.checkForGameOver();
         },

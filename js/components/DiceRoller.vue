@@ -3,26 +3,27 @@
         <input type="text" style="margin-bottom: 1em" v-if="devMode" v-model="devDice">
 
         <ul class="dice-list">
-            <li v-for="(d, i) in dice" class="die-item">
+            <li v-for="(d, i) in dice" class="die-item" :class="{ disabled: gameOver }">
                 <label class="die-wrap" :class="{ reroll: reroll[i] }" @mouseup="toggleReroll(i)">
-                    <input type="checkbox" class="die-input" :checked="reroll[i]">
+                    <input type="checkbox" class="die-input" :checked="reroll[i]" :disabled="gameOver">
                     <span class="die-face">{{ d | die }}</span>
                 </label>
             </li>
         </ul>
 
-        <button class="button roll-button" :disabled="rolls === 0" @click="roll()">Roll</button>
+        <button class="button roll-button" :disabled="rolls === 0 || gameOver" @click="roll()">Roll</button>
     </div>
 </template>
 
 <script>
 export default {
     name: 'DiceRoller',
-    props: ['rolls'],
+
+    props: ['gameOver', 'rolls'],
 
     data() {
         return {
-            devMode: true,
+            devMode: false,
             devDice: '',
             dice: [null, null, null, null, null],
             reroll: [false, false, false, false, false]
@@ -82,6 +83,9 @@ export default {
         },
 
         toggleReroll(index) {
+            if (this.gameOver) {
+                return;
+            }
             this.$set(this.reroll, index, !this.reroll[index]);
         }
     },

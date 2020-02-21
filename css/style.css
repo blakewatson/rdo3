@@ -119,6 +119,9 @@ button:disabled, .button:disabled {
   height: 0;
   background-color: #ccc;
 }
+.die-item.disabled {
+  opacity: 0.5;
+}
 
 .die-wrap {
   display: flex;

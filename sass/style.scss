@@ -57,6 +57,10 @@ button, .button {
     padding-bottom: calc(20% - 30px);
     height: 0;
     background-color: #ccc;
+
+    &.disabled {
+        opacity: 0.5;
+    }
 }
 
 .die-wrap {

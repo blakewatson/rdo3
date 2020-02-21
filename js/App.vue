@@ -3,12 +3,13 @@
         <button class="restart" @click="start()">
             Restart Game
         </button>
-        <DiceRoller :rolls="rolls" @rolled="rolled" />
+        <DiceRoller :game-over="gameOver" :rolls="rolls" @rolled="rolled" />
         <Scorecard :dice="dice" :rolls="rolls" @scored="scored" @gameover="endGame" />
     </div>
 </template>
 
 <script>
+import events from './event-bus';
 import DiceRoller from './components/DiceRoller';
 import Scorecard from './components/Scorecard';
 
@@ -18,13 +19,14 @@ export default {
     data() {
         return {
             dice: [],
+            gameOver: false,
             rolls: null
         }
     },
 
     methods: {
         endGame() {
-            alert(`Game over.`);
+            this.gameOver = true;
         },
 
         rolled(dice, devMode = false) {
@@ -39,10 +41,15 @@ export default {
         },
 
         scored() {
+            if (this.gameOver) {
+                return;
+            }
             this.rolls = 3;
         },
 
         start() {
+            events.$emit('start');
+            this.gameOver = false;
             this.rolls = 3;
         }
     },

@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import events from '../event-bus';
 import scoringFunctions from '../utils/scoring-functions';
 
 export default {
@@ -193,6 +194,7 @@ export default {
         handleRoyalRoll() {
             if (this.bottom.royalRoll === null) {
                 this.bottom.royalRoll = this.scoreOfDice.royalRoll;
+                this.checkForGameOver();
                 this.$emit('scored');
                 return;
             }
@@ -207,6 +209,7 @@ export default {
 
             if (this.top[keyOfTopNumRolled] === null) {
                 this.top[keyOfTopNumRolled] = this.scoreOfDice[keyOfTopNumRolled];
+                this.checkForGameOver();
                 this.$emit('scored');
                 return;
             }
@@ -253,8 +256,8 @@ export default {
 
             this.calculateTopBonus();
 
-            this.$emit('scored');
             this.checkForGameOver();
+            this.$emit('scored');
         },
 
         shouldShowBottomScoreButton(key, val) {
@@ -262,7 +265,23 @@ export default {
                 return this.isSelectingJoker ? false : this.scoreOfDice[key] > 0;
             }
             return val === null;
+        },
+
+        start() {
+            // reset top scores
+            Object.keys(this.top).forEach(key => this.top[key] = null);
+
+            // reset bottom scores
+            Object.keys(this.bottom).forEach(key => this.bottom[key] = null);
+
+            this.topBonus = null;
+            this.scoreOfDice = {};
+            this.isSelectingJoker = false;
         }
     },
+
+    created() {
+        events.$on('start', () => this.start());
+    }
 }
 </script>

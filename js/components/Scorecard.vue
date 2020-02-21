@@ -90,7 +90,9 @@ export default {
                 chance: 'Chance'
             },
 
-            scoreOfDice: {}
+            scoreOfDice: {},
+
+            isSelectingJoker: false
         };
     },
 
@@ -151,16 +153,38 @@ export default {
                 return;
             }
 
+            if (this.bottom.royalRoll !== 0) {
+                this.bottom.royalRoll += 100;
+            }
+
+            // Joker rules
+
             const keyOfTopNumRolled = Object.keys(this.top)[this.dice[0] - 1];
 
             if (this.top[keyOfTopNumRolled] === null) {
-                this.bottom.royalRoll = this.scoreOfDice.royalRoll;
                 this.top[keyOfTopNumRolled] = this.scoreOfDice[keyOfTopNumRolled];
                 this.$emit('scored');
                 return;
             }
 
-            // TODO: bottom half wildcard
+            // if the appropriate top section isn't available, the following scores apply
+            this.isSelectingJoker = true;
+
+            // Top section
+            Object.entries(this.top).forEach(([key, val]) => {
+                if (key === keyOfTopNumRolled) {
+                    return;
+                }
+                this.scoreOfDice[key] = scoringFunctions[key](this.dice);
+            });
+
+            // Bottom section
+            this.scoreOfDice.threeOfAKind = scoringFunctions.sumAll(this.dice);
+            this.scoreOfDice.fourOfAKind = scoringFunctions.sumAll(this.dice);
+            this.scoreOfDice.fullHouse = 25;
+            this.scoreOfDice.smallStraight = 30;
+            this.scoreOfDice.largeStraight = 40;
+            this.scoreOfDice.chance = scoringFunctions.sumAll(this.dice);
         },
 
         scoreDice() {
@@ -177,6 +201,8 @@ export default {
                 return;
             }
 
+            this.isSelectingJoker = false;
+
             this.calculateTopBonus();
 
             this[section][key] = this.scoreOfDice[key];
@@ -185,7 +211,7 @@ export default {
 
         shouldShowBottomScoreButton(key, val) {
             if (key === 'royalRoll' && val !== null && val !== 0) {
-                return this.scoreOfDice[key] > 0;
+                return this.isSelectingJoker ? false : this.scoreOfDice[key] > 0;
             }
             return val === null;
         }

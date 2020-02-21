@@ -105,11 +105,11 @@ function largeStraight(dice) {
 }
 
 function royalRoll(dice, score) {
-    if (!nOfAKind(dice, 5)) {
+    if (score === 0 || !nOfAKind(dice, 5)) {
         return 0;
     }
 
-    return !score ? 50 : score + 100;
+    return score === null ? 50 : score + 100;
 }
 
 function chance(dice) {
@@ -129,5 +129,6 @@ export default {
     smallStraight,
     largeStraight,
     royalRoll,
-    chance
+    chance,
+    sumAll
 };

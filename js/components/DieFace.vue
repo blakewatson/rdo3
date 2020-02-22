@@ -1,0 +1,17 @@
+<template>
+    <div class="die-face">
+        <svg v-if="number === 6" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#F8D9D9" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><rect fill="#F06262" width="74" height="74" rx="11"/><circle fill="url(#a)" cx="17" cy="21" r="8"/><circle fill="url(#a)" cx="17" cy="53" r="8"/><circle fill="url(#a)" cx="37" cy="21" r="8"/><circle fill="url(#a)" cx="37" cy="53" r="8"/><circle fill="url(#a)" cx="57" cy="21" r="8"/><circle fill="url(#a)" cx="57" cy="53" r="8"/></g></svg>
+        <svg v-if="number === 5" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#F8D9D9" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><rect fill="#F06262" width="74" height="74" rx="11"/><circle fill="url(#a)" cx="19" cy="21" r="8"/><circle fill="url(#a)" cx="19" cy="53" r="8"/><circle fill="url(#a)" cx="37" cy="37" r="8"/><circle fill="url(#a)" cx="55" cy="21" r="8"/><circle fill="url(#a)" cx="55" cy="53" r="8"/></g></svg>
+        <svg v-if="number === 4" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#F8D9D9" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><rect fill="#F06262" width="74" height="74" rx="11"/><circle fill="url(#a)" cx="19" cy="21" r="8"/><circle fill="url(#a)" cx="19" cy="53" r="8"/><circle fill="url(#a)" cx="55" cy="21" r="8"/><circle fill="url(#a)" cx="55" cy="53" r="8"/></g></svg>
+        <svg v-if="number === 3" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#F8D9D9" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><rect fill="#F06262" width="74" height="74" rx="11"/><circle fill="url(#a)" cx="19" cy="21" r="8"/><circle fill="url(#a)" cx="37" cy="37" r="8"/><circle fill="url(#a)" cx="55" cy="53" r="8"/></g></svg>
+        <svg v-if="number === 2" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#F8D9D9" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><rect fill="#F06262" width="74" height="74" rx="11"/><circle fill="url(#a)" cx="19" cy="21" r="8"/><circle fill="url(#a)" cx="55" cy="53" r="8"/></g></svg>
+        <svg v-if="number === 1" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#F8D9D9" offset="0%"/><stop stop-color="#FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><rect fill="#F06262" width="74" height="74" rx="11"/><circle fill="url(#a)" cx="37" cy="37" r="8"/></g></svg>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'DieFace',
+    props: ['number']
+}
+</script>

@@ -6,16 +6,19 @@
             <li v-for="(d, i) in dice" class="die-item" :class="{ disabled: gameOver }">
                 <label class="die-wrap" :class="{ reroll: reroll[i] }" @mouseup="toggleReroll(i)">
                     <input type="checkbox" class="die-input" :checked="reroll[i]" :disabled="gameOver">
-                    <span class="die-face">{{ d | die }}</span>
+                    <!-- <span class="die-face">{{ d | die }}</span> -->
+                    <DieFace :number="d" />
                 </label>
             </li>
         </ul>
 
-        <button class="button roll-button" :disabled="rolls === 0 || gameOver" @click="roll()">Roll</button>
+        <button class="button roll-button" :disabled="shouldDisableRollBtn" @click="roll()">Roll</button>
     </div>
 </template>
 
 <script>
+import DieFace from './DieFace';
+
 export default {
     name: 'DiceRoller',
 
@@ -28,6 +31,12 @@ export default {
             dice: [null, null, null, null, null],
             reroll: [false, false, false, false, false]
         };
+    },
+
+    computed: {
+        shouldDisableRollBtn() {
+            return this.rolls === 0 || this.gameOver || this.reroll.every(r => !r);
+        }
     },
 
     watch: {
@@ -94,6 +103,10 @@ export default {
         die(val) {
             return val === null ? '—' : val;
         }
+    },
+
+    components: {
+        DieFace
     }
 }
 </script>

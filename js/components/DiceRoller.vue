@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import events from '../event-bus';
 import DieFace from './DieFace';
 
 export default {
@@ -98,11 +99,9 @@ export default {
             this.$set(this.reroll, index, !this.reroll[index]);
         }
     },
-
-    filters: {
-        die(val) {
-            return val === null ? '—' : val;
-        }
+    
+    created() {
+        events.$on('reset-reroll-selections', () => this.deselectAll());
     },
 
     components: {

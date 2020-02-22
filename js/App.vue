@@ -45,6 +45,7 @@ export default {
                 return;
             }
             this.rolls = 3;
+            events.$emit('reset-reroll-selections');
         },
 
         start() {

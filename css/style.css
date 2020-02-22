@@ -98,7 +98,7 @@ button, .button {
   background-color: #ebedf0;
   color: #19191b;
 }
-button:hover, button:focus, .button:hover, .button:focus {
+button:not(:disabled):hover, button:not(:disabled):focus, .button:not(:disabled):hover, .button:not(:disabled):focus {
   border-color: #939599;
 }
 button:disabled, .button:disabled {
@@ -189,13 +189,17 @@ button:disabled, .button:disabled {
   background-color: #0f90e6;
   color: #fff;
   z-index: 2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
-.roll-button:hover, .roll-button:focus {
+.roll-button:not(:disabled):hover, .roll-button:not(:disabled):focus {
   border-color: #128ada;
   box-shadow: 0 2px 0 #0f73b6;
   background-color: #1e9cf0;
 }
-.roll-button:active {
+.roll-button:not(:disabled):active {
   transform: translateY(0);
   box-shadow: none;
 }

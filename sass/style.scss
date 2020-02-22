@@ -33,7 +33,7 @@ button, .button {
     background-color: rgb(235, 237, 240);
     color: rgb(25, 25, 27);
 
-    &:hover, &:focus {
+    &:not(:disabled):hover, &:not(:disabled):focus {
         border-color: rgb(147, 149, 153);
     }
 
@@ -134,14 +134,15 @@ button, .button {
     background-color: #0f90e6;
     color: #fff;
     z-index: 2;
+    user-select: none;
 
-    &:hover, &:focus {
+    &:not(:disabled):hover, &:not(:disabled):focus {
         border-color: lighten(#107bc2, 5%);
         box-shadow: 0 2px 0 lighten(#0d649e, 5%);
         background-color: lighten(#0f90e6, 5%);
     }
 
-    &:active {
+    &:not(:disabled):active {
         transform: translateY(0);
         box-shadow: none;
     }

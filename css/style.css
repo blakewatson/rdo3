@@ -149,6 +149,12 @@ button:disabled, .button:disabled {
   transform: translate(-50%, -0.75em);
   font-size: 12px;
 }
+.rolling .reroll .die-face {
+  -webkit-animation: rolling 0.5s infinite linear;
+          animation: rolling 0.5s infinite linear;
+  -webkit-filter: blur(13px);
+          filter: blur(13px);
+}
 
 .die-input {
   position: absolute;
@@ -204,6 +210,23 @@ button:disabled, .button:disabled {
   box-shadow: none;
 }
 
+@-webkit-keyframes rolling {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rolling {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 /* -- Scorecard -- */
 .scorecard {
   font-size: 16px;

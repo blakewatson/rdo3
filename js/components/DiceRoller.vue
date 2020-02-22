@@ -1,5 +1,5 @@
 <template>
-    <div class="dice-roller" v-if="rolls !== null">
+    <div class="dice-roller" :class="{ rolling: isRolling }" v-if="rolls !== null">
         <input type="text" style="margin-bottom: 1em" v-if="devMode" v-model="devDice">
 
         <ul class="dice-list">
@@ -31,6 +31,7 @@ export default {
             devMode: false,
             devDice: '',
             dice: [null, null, null, null, null],
+            isRolling: false,
             reroll: [false, false, false, false, false]
         };
     },

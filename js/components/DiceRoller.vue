@@ -18,6 +18,7 @@
 
 <script>
 import events from '../event-bus';
+import rand from '../utils/random-numbers';
 import DieFace from './DieFace';
 
 export default {
@@ -76,7 +77,7 @@ export default {
 
             this.dice = this.dice.map((d, i) => {
                 if (!this.reroll[i]) return d;
-                return Math.floor(Math.random() * 6) + 1;
+                return rand();
             });
             
             this.deselectAll();
@@ -86,7 +87,7 @@ export default {
 
         rollAll() {
             this.dice = this.dice.map((d, i) => {
-                return Math.floor(Math.random() * 6) + 1;
+                return rand();
             });
 
             this.emitRoll();

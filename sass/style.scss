@@ -1,5 +1,15 @@
 @import 'reset';
 
+/* -- Dark Mode -- */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1d1b1b;
+        color: #eee;
+    }
+}
+
+
 /* -- App Layout -- */
 
 .wrapper {
@@ -39,6 +49,16 @@ button, .button {
 
     &:disabled {
         opacity: 0.5;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        border-color: rgb(104, 106, 109);
+        background-color: rgb(78, 74, 74);
+        color: #eee;
+
+        &:not(:disabled):hover, &:not(:disabled):focus {
+            border-color: rgb(188, 191, 197);
+        }
     }
 }
 
@@ -83,6 +103,14 @@ button, .button {
 
     .rolling-all & svg {
         opacity: 1;
+    }
+}
+
+.die-face {
+    @media (prefers-color-scheme: dark) {
+        svg rect {
+            fill: #c23333;
+        }
     }
 }
 
@@ -203,6 +231,12 @@ button, .button {
     td {
         padding-top: 10px;
         padding-bottom: 10px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        tr {
+            border-bottom-color: #3b3838;
+        }
     }
 }
 

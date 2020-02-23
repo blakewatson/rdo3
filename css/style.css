@@ -68,6 +68,13 @@ html {
   box-sizing: inherit;
 }
 
+/* -- Dark Mode -- */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1d1b1b;
+    color: #eee;
+  }
+}
 /* -- App Layout -- */
 .wrapper {
   margin: 0 auto;
@@ -103,6 +110,16 @@ button:not(:disabled):hover, button:not(:disabled):focus, .button:not(:disabled)
 }
 button:disabled, .button:disabled {
   opacity: 0.5;
+}
+@media (prefers-color-scheme: dark) {
+  button, .button {
+    border-color: #686a6d;
+    background-color: #4e4a4a;
+    color: #eee;
+  }
+  button:not(:disabled):hover, button:not(:disabled):focus, .button:not(:disabled):hover, .button:not(:disabled):focus {
+    border-color: #bcbfc5;
+  }
 }
 
 /* -- Dice Roller -- */
@@ -144,6 +161,12 @@ button:disabled, .button:disabled {
 }
 .rolling-all .die-wrap svg {
   opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .die-face svg rect {
+    fill: #c23333;
+  }
 }
 
 .reroll svg {
@@ -263,6 +286,11 @@ button:disabled, .button:disabled {
 .scorecard-tables td {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  .scorecard-tables tr {
+    border-bottom-color: #3b3838;
+  }
 }
 
 .score-name-cell {

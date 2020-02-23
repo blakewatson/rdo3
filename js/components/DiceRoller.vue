@@ -1,5 +1,5 @@
 <template>
-    <div class="dice-roller" :class="{ rolling: isRolling }" v-if="rolls !== null">
+    <div class="dice-roller" :class="{ rolling: isRolling, 'rolling-all': isRollingAll }" v-if="rolls !== null">
         <input type="text" style="margin-bottom: 1em" v-if="devMode" v-model="devDice">
 
         <ul class="dice-list">
@@ -30,9 +30,11 @@ export default {
         return {
             devMode: false,
             devDice: '',
-            dice: [null, null, null, null, null],
+            dice: [6, 6, 6, 6, 6],
             isRolling: false,
-            reroll: [false, false, false, false, false]
+            isRollingAll: false,
+            reroll: [false, false, false, false, false],
+            rollingTime: 300
         };
     },
 
@@ -73,29 +75,41 @@ export default {
             this.$emit('rolled', this.dice);
         },
 
-        roll() {
+        async roll() {
             if (this.reroll.every(r => !r)) return;
+
+            this.isRolling = true;
+
+            await new Promise(resolve => setTimeout(() => resolve(), this.rollingTime));
 
             this.dice = this.dice.map((d, i) => {
                 if (!this.reroll[i]) return d;
                 return rand();
             });
+
+            this.isRolling = false;
             
             this.deselectAll();
 
             this.emitRoll();
         },
 
-        rollAll() {
+        async rollAll() {
+            this.isRollingAll = true;
+
+            await new Promise(resolve => setTimeout(() => resolve(), this.rollingTime));
+
             this.dice = this.dice.map((d, i) => {
                 return rand();
             });
+
+            this.isRollingAll = false;
 
             this.emitRoll();
         },
 
         toggleReroll(index) {
-            if (this.gameOver) {
+            if (this.rolls === 0 || this.gameOver) {
                 return;
             }
             this.$set(this.reroll, index, !this.reroll[index]);

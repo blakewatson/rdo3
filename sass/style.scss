@@ -75,6 +75,15 @@ button, .button {
     width: 100%;
     height: 100%;
     cursor: pointer;
+
+    .rolling-all & .die-face {
+        animation: rolling 0.5s infinite linear;
+        filter: blur(8px);
+    }
+
+    .rolling-all & svg {
+        opacity: 1;
+    }
 }
 
 .reroll {
@@ -94,7 +103,11 @@ button, .button {
 
     .rolling & .die-face {
         animation: rolling 0.5s infinite linear;
-        filter: blur(13px);
+        filter: blur(8px);
+    }
+
+    .rolling & svg {
+        opacity: 1;
     }
 }
 

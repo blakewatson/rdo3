@@ -32,7 +32,7 @@ export default {
 
     data() {
         return {
-            devMode: false,
+            devMode: true,
             devDice: '',
             dice: [6, 6, 6, 6, 6],
             isRolling: false,

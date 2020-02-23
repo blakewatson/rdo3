@@ -8,7 +8,7 @@
                         <td class="score-cell">
                             <button
                                 class="score-button"
-                                v-if="scorecard[key] === null"
+                                v-if="scorecard[key] === null && !gameOver"
                                 v-text="getScoreButtonLabel(key)"
                                 @click="scoreTurn('top', key)"
                             ></button>
@@ -61,7 +61,7 @@ import scoringFunctions from '../utils/scoring-functions';
 export default {
     name: 'Scorecard',
 
-    props: ['rolls', 'dice'],
+    props: ['rolls', 'dice', 'gameOver'],
 
     data() {
         return {
@@ -261,9 +261,14 @@ export default {
         },
 
         shouldShowBottomScoreButton(key, val) {
+            if (this.gameOver) {
+                return false;
+            }
+
             if (key === 'royalRoll' && val !== null && val !== 0) {
                 return this.isSelectingJoker ? false : this.scoreOfDice[key] > 0;
             }
+            
             return val === null;
         },
 

@@ -4,7 +4,7 @@
             Restart Game
         </button>
         <DiceRoller :game-over="gameOver" :rolls="rolls" @rolled="rolled" />
-        <Scorecard :dice="dice" :rolls="rolls" @scored="scored" @gameover="endGame" />
+        <Scorecard :dice="dice" :game-over="gameOver" :rolls="rolls" @scored="scored" @gameover="endGame" />
     </div>
 </template>
 

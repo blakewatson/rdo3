@@ -12,7 +12,12 @@
             </li>
         </ul>
 
-        <button class="button roll-button" :disabled="shouldDisableRollBtn" @click="roll()">Roll</button>
+        <div class="dice-controls">
+            <button class="button roll-button" :disabled="shouldDisableRollBtn" @click="roll()">Roll</button>
+            <div class="select-all-wrap">
+                <button class="button select-all-button" :disabled="shouldDisableSelectAllBtn" @click="selectAll()">Select All</button>
+            </div>
+        </div>
         <p class="rolls-left">
             <span v-if="gameOver">Game Over</span>
             <span v-else>Rolls left: {{ rolls }}</span>
@@ -45,6 +50,10 @@ export default {
     computed: {
         shouldDisableRollBtn() {
             return this.rolls === 0 || this.gameOver || this.reroll.every(r => !r);
+        },
+
+        shouldDisableSelectAllBtn() {
+            return this.rolls === 0 || this.gameOver;
         }
     },
 
@@ -110,6 +119,10 @@ export default {
             this.isRollingAll = false;
 
             this.emitRoll();
+        },
+
+        selectAll() {
+            this.reroll = this.reroll.map(() => true);
         },
 
         toggleReroll(index) {

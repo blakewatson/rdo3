@@ -104,6 +104,10 @@ button, .button {
   text-align: center;
   background-color: #ebedf0;
   color: #19191b;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 button:not(:disabled):hover, button:not(:disabled):focus, .button:not(:disabled):hover, .button:not(:disabled):focus {
   border-color: #939599;
@@ -220,7 +224,15 @@ button:disabled, .button:disabled {
   height: 100%;
 }
 
+.dice-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 1em;
+}
+
 .roll-button {
+  grid-column-start: 2;
+  good-column-end: 3;
   position: relative;
   transform: translateY(-2px);
   min-width: 120px;
@@ -230,10 +242,6 @@ button:disabled, .button:disabled {
   background-color: #0f90e6;
   color: #fff;
   z-index: 2;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
 }
 .roll-button:not(:disabled):hover, .roll-button:not(:disabled):focus {
   border-color: #128ada;
@@ -243,6 +251,23 @@ button:disabled, .button:disabled {
 .roll-button:not(:disabled):active {
   transform: translateY(0);
   box-shadow: none;
+}
+
+.select-all-wrap {
+  grid-column-start: 3;
+}
+
+.select-all-button {
+  display: inline-block;
+  position: relative;
+  transform: translateY(-2px);
+  background: none;
+  border-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+  .select-all-button:not(:disabled):hover, .select-all-button:not(:disabled):focus {
+    border-color: #545557;
+  }
 }
 
 .rolls-left {

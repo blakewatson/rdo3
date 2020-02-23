@@ -13,7 +13,10 @@
         </ul>
 
         <button class="button roll-button" :disabled="shouldDisableRollBtn" @click="roll()">Roll</button>
-        <p class="rolls-left">Rolls left: {{ rolls }}</p>
+        <p class="rolls-left">
+            <span v-if="gameOver">Game Over</span>
+            <span v-else>Rolls left: {{ rolls }}</span>
+        </p>
     </div>
 </template>
 

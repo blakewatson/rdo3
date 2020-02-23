@@ -94,6 +94,18 @@ html {
   text-align: center;
 }
 
+/* -- Header -- */
+.site-title {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+}
+.site-title .site-logo {
+  max-width: 100%;
+  height: auto;
+}
+
 /* -- Generic Buttons -- */
 button, .button {
   all: unset;

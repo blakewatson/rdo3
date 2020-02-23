@@ -4,7 +4,7 @@
             <button class="restart" @click="start()">
                 Restart Game
             </button>
-            <p class="high-score">Personal Best: <strong>{{ highScore }}</strong></p>
+            <p class="high-score">Personal Best: <strong>{{ highScore | scoreDisplay }}</strong></p>
         </div>
         <DiceRoller :game-over="gameOver" :rolls="rolls" @rolled="rolled" />
         <Scorecard :dice="dice" :game-over="gameOver" :rolls="rolls" @scored="scored" @gameover="endGame" />
@@ -64,6 +64,12 @@ export default {
             events.$emit('start');
             this.gameOver = false;
             this.rolls = 3;
+        }
+    },
+
+    filters: {
+        scoreDisplay(val) {
+            return val ? val : '—';
         }
     },
 

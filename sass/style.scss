@@ -16,7 +16,7 @@
 }
 
 .dice-roller {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     text-align: center;
 }
 
@@ -164,6 +164,11 @@ button, .button {
         transform: translateY(0);
         box-shadow: none;
     }
+}
+
+.rolls-left {
+    margin-top: 1em;
+    font-size: 14px;
 }
 
 @keyframes rolling {

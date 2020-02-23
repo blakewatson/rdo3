@@ -13,6 +13,7 @@
         </ul>
 
         <button class="button roll-button" :disabled="shouldDisableRollBtn" @click="roll()">Roll</button>
+        <p class="rolls-left">Rolls left: {{ rolls }}</p>
     </div>
 </template>
 

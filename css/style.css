@@ -83,7 +83,7 @@ html {
 }
 
 .dice-roller {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   text-align: center;
 }
 
@@ -220,6 +220,11 @@ button:disabled, .button:disabled {
 .roll-button:not(:disabled):active {
   transform: translateY(0);
   box-shadow: none;
+}
+
+.rolls-left {
+  margin-top: 1em;
+  font-size: 14px;
 }
 
 @-webkit-keyframes rolling {

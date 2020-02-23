@@ -187,7 +187,7 @@ export default {
         },
 
         getScoreButtonLabel(key) {
-            if (!key in this.scoreOfDice) return 0;
+            if (!(key in this.scoreOfDice)) return '-';
             return this.scoreOfDice[key];
         },
 

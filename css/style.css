@@ -68,6 +68,39 @@ html {
   box-sizing: inherit;
 }
 
+/* !-- Accessibility ---------------------------------------- */
+.sr-only, .assistive-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+
+/* Better focus style */
+:focus:not([tabindex="-1"]) {
+  outline: 4px solid #80b3ff;
+  outline-offset: 2px;
+}
+
+/* Hide elements with the `hidden` attribute */
+[hidden] {
+  display: none;
+}
+
 /* -- Dark Mode -- */
 @media (prefers-color-scheme: dark) {
   body {
@@ -101,9 +134,14 @@ html {
   left: 20px;
   width: 100px;
 }
-.site-title .site-logo {
+.site-title svg {
+  fill: #222;
   max-width: 100%;
-  height: auto;
+}
+@media (prefers-color-scheme: dark) {
+  .site-title svg {
+    fill: #ddd;
+  }
 }
 
 /* -- Generic Buttons -- */

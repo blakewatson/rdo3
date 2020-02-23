@@ -1,8 +1,11 @@
 <template>
     <div class="wrapper">
-        <button class="restart" @click="start()">
-            Restart Game
-        </button>
+        <div class="sidebar">
+            <button class="restart" @click="start()">
+                Restart Game
+            </button>
+            <p class="high-score">Personal Best: <strong>{{ highScore }}</strong></p>
+        </div>
         <DiceRoller :game-over="gameOver" :rolls="rolls" @rolled="rolled" />
         <Scorecard :dice="dice" :game-over="gameOver" :rolls="rolls" @scored="scored" @gameover="endGame" />
     </div>
@@ -20,13 +23,22 @@ export default {
         return {
             dice: [],
             gameOver: false,
+            highScore: 0,
             rolls: null
         }
     },
 
     methods: {
-        endGame() {
+        endGame(grandTotal) {
             this.gameOver = true;
+            this.recordHighScore(grandTotal)
+        },
+
+        recordHighScore(grandTotal) {
+            if (grandTotal > this.highScore) {
+                this.highScore = grandTotal;
+                localStorage.setItem('rdo3-high-score', grandTotal);
+            }
         },
 
         rolled(dice, devMode = false) {
@@ -53,6 +65,11 @@ export default {
             this.gameOver = false;
             this.rolls = 3;
         }
+    },
+
+    created() {
+        const storage = localStorage.getItem('rdo3-high-score');
+        this.highScore = storage ? parseInt(storage) : 0;
     },
 
     mounted() {

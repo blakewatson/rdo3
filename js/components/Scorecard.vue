@@ -182,7 +182,7 @@ export default {
             const scorecardIncomplete = Object.values(this.scorecard).some(val => val === null);
 
             if (!scorecardIncomplete) {
-                this.$emit('gameover');
+                this.$emit('gameover', this.grandTotal);
             }
         },
 
@@ -268,7 +268,7 @@ export default {
             if (key === 'royalRoll' && val !== null && val !== 0) {
                 return this.isSelectingJoker ? false : this.scoreOfDice[key] > 0;
             }
-            
+
             return val === null;
         },
 

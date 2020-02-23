@@ -19,7 +19,7 @@
     max-width: 600px;
 }
 
-.restart {
+.sidebar {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -263,5 +263,13 @@ button, .button {
     display: block;
     padding: 0.5em 1em;
     border: 1px solid transparent;
+    text-align: right;
+}
+
+
+/* -- Sidebar -- */
+
+.high-score {
+    margin-top: 2rem;
     text-align: right;
 }

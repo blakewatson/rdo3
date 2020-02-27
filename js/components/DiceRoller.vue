@@ -6,7 +6,6 @@
             <li v-for="(d, i) in dice" class="die-item" :class="{ disabled: gameOver }">
                 <label class="die-wrap" :class="{ reroll: reroll[i] }" @mouseup="toggleReroll(i)">
                     <input type="checkbox" class="die-input" :checked="reroll[i]" :disabled="gameOver">
-                    <!-- <span class="die-face">{{ d | die }}</span> -->
                     <DieFace :number="d" />
                 </label>
             </li>
@@ -88,6 +87,26 @@ export default {
             this.$emit('rolled', this.dice);
         },
 
+        handleKeyEvents() {
+            window.addEventListener('keyup', event => {
+                let key = event.key;
+
+                if (key.toLowerCase() === 'r' && !this.shouldDisableRollBtn) {
+                    this.roll();
+                }
+
+                if (key.toLowerCase() === 'a' && !this.shouldDisableSelectAllBtn) {
+                    this.selectAll();
+                }
+
+                if (key.match(/[1-5]/gi)) {
+                    key = parseInt(key);
+                    key--;
+                    this.toggleReroll(key);
+                }
+            });
+        },
+
         async roll() {
             if (this.reroll.every(r => !r)) return;
 
@@ -134,6 +153,7 @@ export default {
     },
     
     created() {
+        this.handleKeyEvents();
         events.$on('reset-reroll-selections', () => this.deselectAll());
     },
 

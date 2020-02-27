@@ -8,7 +8,7 @@
                         <td class="score-cell">
                             <button
                                 class="score-button"
-                                v-if="scorecard[key] === null && !gameOver"
+                                v-if="shouldShowTopScoreButton(key)"
                                 v-text="getScoreButtonLabel(key)"
                                 @click="scoreTurn('top', key)"
                             ></button>
@@ -191,6 +191,42 @@ export default {
             return this.scoreOfDice[key];
         },
 
+        handleKeyEvents() {
+            window.addEventListener('keyup', event => {
+                let key = event.code.replace('Digit', '');
+
+                if (!key.match(/[1-7]/gi)) {
+                    return;
+                }
+
+                key = parseInt(key);
+                key--;
+
+                if (event.shiftKey) {
+                    const scoreKey = Object.keys(this.top)[key];
+
+                    if (!this.shouldShowTopScoreButton(scoreKey)) {
+                        return;
+                    }
+
+                    this.scoreTurn('top', scoreKey);
+                    return;
+                }
+
+                if (event.altKey) {
+                    const scoreKey = Object.keys(this.bottom)[key];
+                    const scoreValue = this.bottom[scoreKey];
+
+                    if (!this.shouldShowBottomScoreButton(scoreKey, scoreValue)) {
+                        return;
+                    }
+
+                    this.scoreTurn('bottom', scoreKey);
+                    return;
+                }
+            });
+        },
+
         handleRoyalRoll() {
             if (this.bottom.royalRoll === null) {
                 this.bottom.royalRoll = this.scoreOfDice.royalRoll;
@@ -260,6 +296,10 @@ export default {
             this.$emit('scored');
         },
 
+        shouldShowTopScoreButton(key) {
+            return this.scorecard[key] === null && !this.gameOver;
+        },
+
         shouldShowBottomScoreButton(key, val) {
             if (this.gameOver) {
                 return false;
@@ -286,6 +326,7 @@ export default {
     },
 
     created() {
+        this.handleKeyEvents();
         events.$on('start', () => this.start());
     }
 }
